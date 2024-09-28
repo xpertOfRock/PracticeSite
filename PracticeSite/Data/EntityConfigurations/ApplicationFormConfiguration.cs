@@ -54,7 +54,6 @@ namespace PracticeSite.Data.EntityConfigurations
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
 
-
             builder.OwnsOne(a => a.Address);
 
             builder.Property(a => a.Status)
