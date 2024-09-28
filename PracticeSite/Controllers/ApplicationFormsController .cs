@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PracticeSite.Data.Identity;
 using PracticeSite.Data;
-using PracticeSite.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using PracticeSite.Models.Enums;
@@ -82,7 +81,6 @@ namespace PracticeSite.Controllers
             application.Status = ApplicationStatus.Rejected;
             await _context.SaveChangesAsync();
 
-            // Отправка почты заявителю через MailKit
             _emailService.SendEmail
             (
                 application.Email,

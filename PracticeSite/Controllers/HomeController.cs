@@ -17,6 +17,14 @@ namespace PracticeSite.Controllers
         {
             return View();
         }
+        public IActionResult News()
+        {
+            return View();
+        }
+        public IActionResult FAQ()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
