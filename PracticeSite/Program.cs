@@ -13,6 +13,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
 });
 
+builder.Services.Configure<MailKitSettings>(builder.Configuration.GetSection("EmailSettings"));
+
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(config =>
 {
     config.Password.RequiredLength = 5;

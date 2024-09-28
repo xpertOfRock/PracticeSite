@@ -6,40 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - Ваш сайт</title>
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-success">
             <div class="container-fluid">
-                <a class="navbar-brand text-white" href="/">Ваш сайт</a>
+                <a class="navbar-brand" href="/">Ваш сайт</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/">Головна</a>
+                            <a class="nav-link active" href="/">Головна</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/SubmitApplication/Submit">Подати заявку</a>
+                            <a class="nav-link" asp-controller="SubmitApplication" asp-action="Submit">Подати заявку</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/News">Новини компанії</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="News">Новини компанії</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/FAQ">FAQ</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="FAQ">FAQ</a>
                         </li>
+                        @if(User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ApplicationForms" asp-action="Index">Переглянути заявки</a>
+                            </li>
+                        }
                     </ul>
-
                     <ul class="navbar-nav">
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <span class="nav-link text-white">Вітаємо, @User.Identity.Name!</span>
+                                <span class="navbar-text">Вітаємо, @User.Identity.Name!</span>
                             </li>
                             <li class="nav-item">
-                                <form asp-controller="Account" asp-action="Logout" method="post" class="form-inline">
+                                <form asp-controller="Account" asp-action="Logout" method="post">
                                     <button type="submit" class="btn btn-outline-light">Вийти</button>
                                 </form>
                             </li>
@@ -47,10 +52,10 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="/Account/Login">Увійти</a>
+                                <a class="nav-link" href="/Account/Login">Увійти</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="/Account/Register">Зареєструватися</a>
+                                <a class="nav-link" href="/Account/Register">Зареєструватися</a>
                             </li>
                         }
                     </ul>

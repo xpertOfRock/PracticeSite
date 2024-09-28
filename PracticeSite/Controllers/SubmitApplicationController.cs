@@ -17,14 +17,12 @@ namespace PracticeSite.Controllers
             _context = context;
         }
 
-        // GET: Показать форму подачи заявки
         [HttpGet]
         public IActionResult Submit()
         {
             return View();
         }
 
-        // POST: Обработка подачи заявки
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Submit(ApplicationFormViewModel model)
