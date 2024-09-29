@@ -9,6 +9,8 @@ namespace PracticeSite.Data.Identity
         public int Age { get; set; }
         public string PhoneNumber { get; set; }
         public string UserRole { get; set; } = UserRoles.User;
+
         public ICollection<ApplicationForm> Applications { get; set; } = new List<ApplicationForm>();
+        public ICollection<Vacancy> AppliedVacancies { get; set; } = new List<Vacancy>();
     }
 }

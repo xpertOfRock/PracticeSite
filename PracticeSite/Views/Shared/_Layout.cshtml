@@ -51,15 +51,21 @@
                                 <a class="nav-link" asp-controller="SubmitApplication" asp-action="Submit">Подати заявку</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" asp-controller="Vacancy" asp-action="Index">Вакансії</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" asp-controller="Home" asp-action="News">Новини компанії</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Home" asp-action="FAQ">FAQ</a>
-                            </li>
+                            </li>                         
                             @if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link" asp-controller="ApplicationForms" asp-action="Index">Переглянути заявки</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="AdminVacancy" asp-action="Index">Переглянути вакансії</a>
                                 </li>
                             }
                         </ul>

@@ -1,0 +1,15 @@
+﻿@using PracticeSite.Models.Entities
+@model Vacancy
+
+<h2>Закрити вакансію</h2>
+
+<div class="alert alert-warning">
+    Ви впевнені, що хочете закрити вакансію "@Model.Title"? Після закриття вакансія більше не буде доступна для кандидатів.
+</div>
+
+<form asp-action="Close" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Закрити вакансію</button>
+    <a asp-action="Index" class="btn btn-secondary">Відміна</a>
+</form>
+

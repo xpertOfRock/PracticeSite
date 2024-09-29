@@ -34,7 +34,7 @@ using (var scope = app.Services.CreateScope())
     {
         var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-        await SeedData.Initialize(services, userManager, roleManager);
+        await SeedData.Initialize(services);
     }
     catch (Exception ex)
     {

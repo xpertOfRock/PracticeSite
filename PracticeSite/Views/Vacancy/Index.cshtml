@@ -1,0 +1,30 @@
+﻿@using PracticeSite.Models.Entities
+@model IEnumerable<Vacancy>
+
+<h2>Список вакансій</h2>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            @foreach (var vacancy in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body">
+                            <h4 class="card-title">@vacancy.Title</h4>
+                            <p class="card-text">@vacancy.Description</p>
+                            <p class="card-text">Заробітня плата: @vacancy.Salary UAH</p>
+                            <p class="card-text">Адреса: Україна, @vacancy.Address.ToString()</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="nav-link" asp-controller="Vacancy" asp-action="Details" asp-route-id="@vacancy.Id">Переглянути</a>
+                                </div>
+                                <small class="text-muted">@vacancy.Status</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

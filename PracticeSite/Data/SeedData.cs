@@ -1,61 +1,75 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PracticeSite.Data.Identity;
+using PracticeSite.Models.Entities;
+using PracticeSite.Models.Enums;
+using PracticeSite.Models.ValueObjects;
 
 namespace PracticeSite.Data
 {
     public static class SeedData
     {
-        public static async Task Initialize(IServiceProvider serviceProvider, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task Initialize(IServiceProvider serviceProvider)
         {
-            if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
-            {
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-            }
-            if (!await roleManager.RoleExistsAsync(UserRoles.User))
-            {
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-            }
-
-            string adminEmail = "admin@example.com";
-            if (await userManager.FindByEmailAsync(adminEmail) == null)
-            {
-                var adminUser = new ApplicationUser
+            using (var context = new ApplicationDbContext(
+                serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
+            {                
+                if (!context.Vacancies.Any())
                 {
-                    UserName = adminEmail,
-                    Email = adminEmail,
-                    Name = "Hideo Kojima",
-                    Age = 30,
-                    PhoneNumber = "+380123456789",
-                    UserRole = UserRoles.Admin
+                    var vacancies = new List<Vacancy>
+                {
+                    new Vacancy
+                    {
+                        Title = "Далекобійник",
+                        Description = "Водій для перевезення вантажів на великі відстані.",
+                        Salary = 15000,
+                        Status = VacancyStatus.Active,
+                        Address = new Address("Київська", "Київ", "Вулиця Транспортна", "01001"),
+                        CreatedAt = DateTime.Now
+                    },
+                    new Vacancy
+                    {
+                        Title = "Агроном",
+                        Description = "Фахівець з вирощування сільськогосподарських культур.",
+                        Salary = 18000,
+                        Status = VacancyStatus.Active,
+                        Address = new Address("Черкаська", "Черкаси", "Аграрна вулиця", "18001"),
+                        CreatedAt = DateTime.Now
+                    },
+                    new Vacancy
+                    {
+                        Title = "Комбайнер",
+                        Description = "Оператор комбайну для збору врожаю.",
+                        Salary = 14000,
+                        Status = VacancyStatus.Active,
+                        Address = new Address("Полтавська", "Полтава", "Тракторна вулиця", "36001"),
+                        CreatedAt = DateTime.Now
+                    },
+                    new Vacancy
+                    {
+                        Title = "Охоронець",
+                        Description = "Відповідає за безпеку сільськогосподарського об'єкту.",
+                        Salary = 12000,
+                        Status = VacancyStatus.Active,
+                        Address = new Address("Харківська", "Харків", "Оборонна вулиця", "61001"),
+                        CreatedAt = DateTime.Now
+                    },
+                    new Vacancy
+                    {
+                        Title = "Механік",
+                        Description = "Ремонт та обслуговування сільськогосподарської техніки.",
+                        Salary = 16000,
+                        Status = VacancyStatus.Active,
+                        Address = new Address("Вінницька", "Вінниця", "Технічна вулиця", "21001"),
+                        CreatedAt = DateTime.Now
+                    }
                 };
 
-                var result = await userManager.CreateAsync(adminUser, "abobus123");
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(adminUser, UserRoles.Admin);
-                }
-            }
-
-            string userEmail = "user@example.com";
-            if (await userManager.FindByEmailAsync(userEmail) == null)
-            {
-                var normalUser = new ApplicationUser
-                {
-                    UserName = userEmail,
-                    Email = userEmail,
-                    Name = "Sussy Baka",
-                    Age = 25,
-                    PhoneNumber = "+380987654321",
-                    UserRole = UserRoles.User
-                };
-
-                var result = await userManager.CreateAsync(normalUser, "kebabus321");
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(normalUser, UserRoles.User);
+                    context.Vacancies.AddRange(vacancies);
+                    await context.SaveChangesAsync();
                 }
             }
         }
     }
-
 }
+

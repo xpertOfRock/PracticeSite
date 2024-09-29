@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PracticeSite.Data;
 
@@ -11,9 +12,11 @@ using PracticeSite.Data;
 namespace PracticeSite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240929125112_AddedEntityVacancy")]
+    partial class AddedEntityVacancy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace PracticeSite.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ApplicationUserVacancy", b =>
-                {
-                    b.Property<int>("AppliedVacanciesId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RespondedUsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("AppliedVacanciesId", "RespondedUsersId");
-
-                    b.HasIndex("RespondedUsersId");
-
-                    b.ToTable("ApplicationUserVacancy");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -313,6 +301,9 @@ namespace PracticeSite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime?>("ClosedAt")
                         .HasColumnType("datetime2");
 
@@ -339,22 +330,9 @@ namespace PracticeSite.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.ToTable("Vacancies", (string)null);
-                });
-
-            modelBuilder.Entity("ApplicationUserVacancy", b =>
-                {
-                    b.HasOne("PracticeSite.Models.Entities.Vacancy", null)
-                        .WithMany()
-                        .HasForeignKey("AppliedVacanciesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PracticeSite.Data.Identity.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("RespondedUsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -449,6 +427,10 @@ namespace PracticeSite.Migrations
 
             modelBuilder.Entity("PracticeSite.Models.Entities.Vacancy", b =>
                 {
+                    b.HasOne("PracticeSite.Data.Identity.ApplicationUser", null)
+                        .WithMany("AppliedVacancies")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.OwnsOne("PracticeSite.Models.ValueObjects.Address", "Address", b1 =>
                         {
                             b1.Property<int>("VacancyId")
@@ -485,6 +467,8 @@ namespace PracticeSite.Migrations
             modelBuilder.Entity("PracticeSite.Data.Identity.ApplicationUser", b =>
                 {
                     b.Navigation("Applications");
+
+                    b.Navigation("AppliedVacancies");
                 });
 #pragma warning restore 612, 618
         }

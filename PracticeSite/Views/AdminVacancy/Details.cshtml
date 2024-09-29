@@ -1,0 +1,38 @@
+﻿@using PracticeSite.Models.Entities
+@model Vacancy
+
+<h2>Деталі вакансії</h2>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Назад до списку</a>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@Model.Title</h4>
+        <p class="card-text">@Model.Description</p>
+        <p class="card-text">Заробітна плата: @Model.Salary UAH</p>
+        <p class="card-text">Адреса: @Model.Address.State, @Model.Address.City, @Model.Address.Street, @Model.Address.PostalCode</p>
+        <p class="card-text">Статус: @Model.Status</p>
+    </div>
+</div>
+
+<h3>Користувачі, які відгукнулися:</h3>
+
+@if (Model.RespondedUsers.Any())
+{
+    <ul class="list-group">
+        @foreach (var user in Model.RespondedUsers)
+        {
+            <li class="list-group-item">
+                <strong>Ім'я:</strong> @user.Name<br />
+                <strong>Email:</strong> @user.Email<br />
+                <strong>Телефон:</strong> @user.PhoneNumber
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Немає користувачів, які відгукнулися на цю вакансію.</p>
+}
+
+

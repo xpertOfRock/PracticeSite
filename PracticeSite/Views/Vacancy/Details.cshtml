@@ -1,0 +1,33 @@
+﻿@using PracticeSite.Models.Entities
+@using PracticeSite.Models.Enums
+@model Vacancy
+
+<div class="container">
+    <h1 class="my-4">Вакансія #@Model.Id</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="my-3">Заголовок вакансії:</h3>
+            <p>@Model.Title</p>
+            <h3 class="my-3">Опис вакансії:</h3>
+            <p>@Model.Description</p>
+            <h3 class="my-3">Заробітня плата:</h3>
+            <p>@Model.Salary UAH</p>
+            <h3 class="my-3">Адреса:</h3>
+            <p>@Model.Address.State, @Model.Address.City, @Model.Address.Street, @Model.Address.PostalCode</p>
+        </div>
+
+        <div class="col-md-4">
+            <h3 class="my-3">Статус вакансії:</h3>
+            <p>@Model.Status</p>
+
+            @if (Model.Status == VacancyStatus.Active)
+            {
+                <form asp-action="Apply" asp-route-id="@Model.Id" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-success">Подати заявку</button>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+

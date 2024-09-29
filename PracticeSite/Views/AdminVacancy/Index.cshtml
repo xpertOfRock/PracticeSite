@@ -1,0 +1,70 @@
+﻿@using PracticeSite.Models.Entities
+@using PracticeSite.Models.Enums
+@model IEnumerable<Vacancy>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+<h2>Управління вакансіями</h2>
+
+<form method="get">
+    <div class="form-group">
+        <label for="searchTitle">Назва вакансії</label>
+        <input type="text" name="searchTitle" class="form-control" value="@HttpContextAccessor.HttpContext.Request.Query["searchTitle"]" />
+    </div>
+    <div class="form-group">
+        <label for="sortOrder">Сортувати за</label>
+        <select name="sortOrder" class="form-control">
+            <option value="title">Назва</option>
+            <option value="salary">Заробітна плата</option>
+            <option value="status">Статус</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Сортувати</button>
+</form>
+
+<br />
+<a asp-action="Create" class="btn btn-primary mt-3">Створити вакансію</a>
+<br />
+
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            @foreach (var vacancy in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body">
+                            <h4 class="card-title">@vacancy.Title</h4>
+                            <p class="card-text">@vacancy.Description</p>
+                            <p class="card-text">Заробітна плата: @vacancy.Salary UAH</p>
+                            @switch (vacancy.Status)
+                            {
+                                case VacancyStatus.Active:
+                                    <p class="card-text">
+                                        Статус: Активна
+
+                                    </p>
+                                    break;
+                                case VacancyStatus.Closed:
+                                    <p class="card-text">
+                                        Статус: Закрита
+                                    </p>
+                                    break;
+                            }
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a asp-action="Details" asp-route-id="@vacancy.Id" class="btn btn-info">Деталі</a>
+                                    <a asp-action="Edit" asp-route-id="@vacancy.Id" class="btn btn-warning">Редагувати</a>
+                                    <form asp-action="Close" asp-route-id="@vacancy.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-danger">Закрити</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
