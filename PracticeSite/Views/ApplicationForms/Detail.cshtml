@@ -1,0 +1,42 @@
+﻿@using PracticeSite.Models.Entities
+@using PracticeSite.Models.Enums
+@model ApplicationForm
+
+<div class="container">
+
+    <h1 class="my-4">
+        Заява #@Model.Id
+    </h1>
+    <br>
+
+    <br>
+    <div class="row">
+        <h1>@Model.Title</h1>
+        <div class="col-md-4">
+            <h3 class="my-3">Позивач:</h3>
+            <p>@Model.FullName</p>
+            <h3 class="my-3">Опис заяви:</h3>
+            <p>@Model.Description</p>
+        </div>
+
+        <div class="col-md-4">
+            <h3>Дані щодо території: </h3>
+            <p class="my-3">К-ість запропонованої території в гектарах: @Model.LandArea</p>
+            <p class="my-3">Ціна за гектар: @Math.Round(Model.PricePerHectare, 2) UAH</p>
+            <h3>Контактні дані: </h3>
+            <p class="my-3">Електронна пошта: @Model.Email</p>
+            <p class="my-3">Номер телефону: @Model.PhoneNumber</p>
+            <br>
+            @if (Model.Status == ApplicationStatus.InProgress)
+            {
+                <form asp-action="Accept" asp-route-id="@Model.Id" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-success">Прийняти</button>
+                </form>
+                <form asp-action="Reject" asp-route-id="@Model.Id" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Відхилити</button>
+                </form>
+            }
+        </div>
+    </div>
+
+</div>

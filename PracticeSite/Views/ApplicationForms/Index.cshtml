@@ -22,7 +22,43 @@
     <button type="submit" class="btn btn-primary">Шукати</button>
 </form>
 
-<table class="table">
+<div class="album py-5 bg-light">
+    <div class="container">
+
+        <div class="row">
+            @foreach (var application in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">                      
+                        <div class="card-body">
+                            <h4 class="card-title">@application.Title</h4>
+                            <p class="card-text">Пропозиція від: @application.FullName</p>
+                            <p class="card-text">Вік: @application.Age</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="nav-link" asp-controller="ApplicationForms" asp-action="Detail" asp-route-id="@application.Id">Переглянути</a>
+                                </div>
+                                @switch (application.Status)
+                                {
+                                    case ApplicationStatus.Accepted:
+                                        <small class="text-muted">Прийнята</small>
+                                        break;
+                                    case ApplicationStatus.Rejected:
+                                        <small class="text-muted">Відхилена</small>
+                                        break;
+                                    case ApplicationStatus.InProgress:
+                                        <small class="text-muted">Очікує на відповідь</small>
+                                        break;
+                                }                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }                                   
+        </div>
+    </div>
+</div>
+@* <table class="table">
     <thead>
         <tr>
             <th>Ім'я</th>
@@ -60,4 +96,4 @@
             </tr>
         }
     </tbody>
-</table>
+</table> *@

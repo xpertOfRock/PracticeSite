@@ -46,8 +46,7 @@ namespace PracticeSite.Controllers
                 _context.Applications.Add(applicationForm);
                 await _context.SaveChangesAsync();
 
-                // Вывод сообщения об успешной подаче
-                TempData["SuccessMessage"] = "Ваша заявка успешно отправлена!";
+                TempData["SuccessMessage"] = "Ваша заява успеішно відправлена!";
                 return RedirectToAction("Submit");
             }
 

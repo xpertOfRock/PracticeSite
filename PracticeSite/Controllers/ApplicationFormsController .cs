@@ -23,6 +23,11 @@ namespace PracticeSite.Controllers
             _emailService = emailService;
         }
 
+        public async Task<IActionResult> Detail(int id)
+        {
+            var applocation = await _context.Applications.FindAsync(id);
+            return View(applocation);
+        }
         public async Task<IActionResult> Index(string searchName, string searchPhone, string searchAddress)
         {
             var query = _context.Applications.AsNoTracking();
@@ -39,7 +44,12 @@ namespace PracticeSite.Controllers
 
             if (!string.IsNullOrWhiteSpace(searchAddress))
             {
-                query = query.Where(a => a.Address.ToString().Contains(searchAddress));
+                query = query.Where(a => 
+
+                a.Address.State.Contains(searchAddress) ||
+                a.Address.City.Contains(searchAddress) ||
+                a.Address.Street.Contains(searchAddress) ||
+                a.Address.PostalCode.Contains(searchAddress));
             }
 
             var applications = await query.ToListAsync();
