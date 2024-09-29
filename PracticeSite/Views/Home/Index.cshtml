@@ -1,8 +1,38 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Головна";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-4">Ласкаво просимо до Agronomic Corp!</h1>
+        <p class="lead">Ми - провідна агрокомпанія, що спеціалізується на землеробстві, агротехніці та розвитку агропромислового комплексу. Дізнайтеся більше про наші можливості та вакансії.</p>
+        <hr class="my-4">
+        <p>Приєднуйтесь до нас для розвитку майбутнього сільського господарства України. Ми постійно шукаємо талановитих людей та пропонуємо найкращі умови співпраці.</p>
+        <a class="btn btn-primary btn-lg" href="@Url.Action("Submit", "SubmitApplication")" role="button">Подати заявку</a>
+    </div>
+</div>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Наші послуги</h2>
+            <p>Наша компанія займається наданням комплексних агропослуг, включаючи посів, вирощування та збір врожаїв. Ми також пропонуємо послуги з оренди земель та співпраці з фермерами.</p>
+            <p><a class="btn btn-secondary" href="@Url.Action("FAQ", "Home")">Дізнатися більше &raquo;</a></p>
+        </div>
+        <br />
+
+        <div class="col-md-4">
+            <h2>Вакансії</h2>
+            <p>Ми шукаємо професіоналів у сфері сільського господарства. Перегляньте наші вакансії та приєднуйтесь до команди. Ми цінуємо досвід та інноваційні підходи до агробізнесу.</p>
+            <p><a class="btn btn-secondary" href="@Url.Action("Index", "Vacancy")">Переглянути вакансії &raquo;</a></p>
+        </div>
+        <br />
+        <div class="col-md-4">
+            <h2>Новини</h2>
+            <p>Слідкуйте за нашими новинами та будьте в курсі останніх подій в агропромисловості. Ми організовуємо заходи, конференції та семінари для професіоналів.</p>
+            <p><a class="btn btn-secondary" href="@Url.Action("News", "Home")">Дізнатися більше &raquo;</a></p>
+        </div>
+    </div>
+
+    <hr>
 </div>

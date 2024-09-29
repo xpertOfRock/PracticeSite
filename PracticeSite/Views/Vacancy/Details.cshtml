@@ -3,8 +3,16 @@
 @model Vacancy
 
 <div class="container">
-    <h1 class="my-4">Вакансія #@Model.Id</h1>
 
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <h1 class="my-4">Вакансія #@Model.Id</h1>
+  
     <div class="row">
         <div class="col-md-4">
             <h3 class="my-3">Заголовок вакансії:</h3>

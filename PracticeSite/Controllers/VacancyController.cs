@@ -37,20 +37,25 @@ public class VacancyController : Controller
     [Authorize]
     public async Task<IActionResult> Apply(int id)
     {
-        var vacancy = await _context.Vacancies.FindAsync(id);
+        var vacancy = await _context.Vacancies
+                                    .Include(v => v.RespondedUsers)
+                                    .FirstOrDefaultAsync(v => v.Id == id);
+
         if (vacancy == null || vacancy.Status == VacancyStatus.Closed)
         {
             return NotFound();
         }
 
         var user = await _userManager.GetUserAsync(User);
-        if (user.AppliedVacancies.Any(v => v.Id == id))
+
+        if (vacancy.RespondedUsers.Any(u => u.Id == user.Id))
         {
-            ModelState.AddModelError("", "Ви вже подали заявку на цю вакансію.");
-            return RedirectToAction(nameof(Details), new { id });
+            TempData["ErrorMessage"] = "Ви вже подали заявку на цю вакансію.";
+            return RedirectToAction(nameof(Index), new { id });
         }
 
-        user.AppliedVacancies.Add(vacancy);
+        vacancy.RespondedUsers.Add(user);
+
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }

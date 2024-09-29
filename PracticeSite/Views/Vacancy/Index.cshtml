@@ -1,4 +1,5 @@
 ﻿@using PracticeSite.Models.Entities
+@using PracticeSite.Models.Enums
 @model IEnumerable<Vacancy>
 
 <h2>Список вакансій</h2>
@@ -19,7 +20,15 @@
                                 <div class="btn-group">
                                     <a class="nav-link" asp-controller="Vacancy" asp-action="Details" asp-route-id="@vacancy.Id">Переглянути</a>
                                 </div>
-                                <small class="text-muted">@vacancy.Status</small>
+                                @switch (vacancy.Status)
+                                {
+                                    case VacancyStatus.Active:
+                                        <small class="text-muted">Статус: Активна</small>
+                                        break;
+                                    case VacancyStatus.Closed:
+                                        <small class="text-muted">Статус: Закрита</small>
+                                        break;
+                                }
                             </div>
                         </div>
                     </div>
